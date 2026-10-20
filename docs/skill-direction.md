@@ -1,36 +1,27 @@
-# Skill Direction
+# 스킬 방향
 
-## Purpose
+## 목적과 역할
 
-`codex-token-discipline` reduces total root-and-child cost from avoidable intermediate work.
+`agent-cost-efficiency`는 작업 성공, 필요한 검증과 결과 품질을 유지하며 에이전트 작업의 불필요한 토큰·시간·도구 실행 비용을 줄입니다. 읽기, 실행·재시도, 진행 관측, 위임과 단계 전환의 비용 판단을 맡습니다.
 
-It should help agents decide how to choose bounded execution and observation, read, delegate, checkpoint, and audit work while preserving task success, required evidence, and the user's requested outcome.
+초과 비용이 쌓이기 전에 참여할 수 있도록 자동 선택을 유지합니다. 적용 설명은 명확한 비용 위험에 집중하고 작은 수정, 직접 답변과 일반 테스트 실행은 기존 작업 방식으로 처리합니다.
 
-Keep implicit invocation enabled so prevention can act before costly execution, excess output, or delegation accumulates. Keep the metadata trigger narrow enough to skip routine work.
+## 유지할 원칙
 
-## Keep
+- 전체 파일·diff·로그·스크린샷을 읽기 전에 다음 결정에 필요한 근거를 정합니다.
+- 예측하기 어려운 출력은 실행 전에 반환 형태와 예산을 정하고 source에서 줄입니다.
+- 전체 출력을 보존할 가치가 있을 때만 artifact에 남기고 필요한 범위를 읽습니다.
+- 이전 결과로 다음 실행·재시도·관측을 선택하고 여전히 유효한 증거를 재사용합니다.
+- 독립적으로 유용한 결과를 얻을 수 있는 범위만 위임합니다.
+- 단계 전환에는 재개에 필요한 상태를 남기고, 작업 지속과 인계의 결정은 사용자와 현재 담당 workflow가 소유합니다.
+- 상시 지침은 짧게 유지하고 상세 절차와 현재 작업 상태는 해당 owner로 연결합니다.
 
-- Summary-first reads before full files, diffs, logs, screenshots, or test transcripts.
-- A preflight output contract for unpredictable or batch tool calls: smallest useful return shape, finite budget, and source-side reduction.
-- Artifact-plus-summary handling when full output is worth preserving, with bounded follow-up reads from the artifact.
-- One bounded named agent by default, with parallel work limited to independent, non-overlapping scopes.
-- Compact phase-boundary resume state, especially `BRIEF.md` in repos that use `project-context`, while a coordinating director owns continue, handoff, and session-rotation decisions.
-- Clear routing from always-read files to skills and repo docs.
-- A deterministic local usage-audit script when the user asks where tokens went.
+## 개편 기준
 
-## Avoid
+반복 작업에서 확인한 구체적인 실패 조건에 근거해 바꿉니다. 큰 출력의 반복, 근거 없는 재시도, 중복 위임과 재개 때의 반복 조사가 대표적인 판단 대상입니다. 특정 에이전트의 도구 이름이나 출력 제한 기능에 의존하는 지침은 지원되는 기능과 source 측 제한으로 표현합니다.
 
-- Turning the skill into a generic "answer briefly" rule.
-- Repeating `project-context`, `agents-md-editor`, or browser hygiene contracts.
-- Adding Codex-internal claims that are not observable from current local logs or official docs.
-- Making every task run a token ritual.
-- Treating cleaner main-thread context as a cost win by itself.
-- Waiting for a single large-output threshold or summarizing only after noisy output has already entered the main context.
-- Owning session rotation inside the skill when a director coordinates the long-running workflow.
-- Keeping large examples in the shipped skill body.
+`project-context`는 지속 맥락의 구조와 저장 방식을, `agents-md-editor`는 상시 지침의 내용과 배치를 소유합니다. 이 스킬은 해당 계약을 참조해 비용 판단에 필요한 부분만 다룹니다.
 
-## Evolution
+## 검증
 
-Add rules only when repeated work shows a concrete failure mode: large output loops, stale resume state, duplicated always-read guidance, broad unfocused subagents, or repeated ad hoc token parsers.
-
-Put detailed examples or investigations in repo docs. Keep the shipped skill short enough to load during a real task.
+대표 요청에서 필요한 근거를 좁게 읽는지, 큰 출력을 실행 전에 제한하는지, 유효한 결과를 재사용하는지, 필요한 검증은 완료하는지 확인합니다. 작은 작업은 불필요한 절차 없이 끝나는지 확인합니다. 상세 사례와 조사 근거는 작업 기록에 두고 배포 본문은 실제 작업 중 읽을 수 있는 길이로 유지합니다.

@@ -1,42 +1,39 @@
-# Codex Token Discipline
+# Agent Cost Efficiency
 
 [한국어](README.md) | [English](README.en.md)
 
-## 요약
-
-긴 작업의 root와 child가 큰 로그, 반복 읽기와 불필요한 위임에 비용을 쓰는 일을 줄입니다. 필요한 증거만 좁게 읽고 재사용하며, 작업 단계가 바뀔 때 현재 상태를 짧게 남깁니다.
+필요한 검증과 결과 품질을 유지하며 에이전트 작업의 불필요한 토큰·시간·도구 실행 비용을 줄이는 스킬입니다. 필요한 근거를 좁게 읽고 재사용하며, 실행·관측·위임의 범위를 정하고 다음 단계에 필요한 상태를 남깁니다.
 
 ## 빠른 시작
-
-**설치**
 
 ```bash
 npx skills add perhapsspy/codex-token-discipline
 ```
 
-혹은 `skills/codex-token-discipline` 폴더를 에이전트 스킬 디렉터리에 직접 복사합니다.
+또는 `skills/agent-cost-efficiency` 폴더를 사용하는 에이전트의 스킬 디렉터리에 복사합니다.
 
-**바로 사용**
+평소처럼 작업을 요청하면 명확한 초과 비용 위험이 있을 때 참여합니다. 직접 요청할 수도 있습니다.
 
 ```text
-$codex-token-discipline 이 긴 작업에서 필요한 파일과 로그만 좁게 읽고 다음 단계에 필요한 상태를 짧게 남겨줘.
+agent-cost-efficiency 스킬로 이 긴 조사의 읽기·출력·재시도 비용을 줄이면서 필요한 검증은 끝내줘.
 ```
 
 ## 이런 때 사용
 
-- repo를 넓게 탐색하거나 큰 diff/log/test output을 읽기 시작할 때
-- 출력이 작아도 실행·재시도 비용이 커서 이전 결과로 다음 실행이나 진행 관측을 선택해야 할 때
-- 브라우저나 UI 픽셀 디버깅 루프가 길어질 때
-- subagent의 총비용과 중복 작업을 제한해야 할 때
-- 긴 작업의 phase가 바뀌어 `BRIEF.md` 같은 resume surface를 갱신해야 할 때
-- AGENTS, skills, MCP, memory 같은 always-read/always-available 표면을 늘리기 전에 비용을 따져야 할 때
-- Codex 세션 로그에서 최근 토큰 사용 패턴을 감사하고 싶을 때
+- 넓은 저장소 탐색이나 큰 diff·로그·테스트 출력을 다룰 때
+- 출력이 작아도 실행·재시도 비용이 커서 이전 결과로 다음 실행이나 관측을 선택해야 할 때
+- 브라우저·UI 확인이나 진행 관측이 반복될 때
+- 위임 비용과 중복 작업을 제한해야 할 때
+- 긴 작업의 단계가 바뀌어 재개 가능한 상태를 남겨야 할 때
+- 상시 읽는 지침이나 항상 제공되는 도구·스킬을 늘리기 전에 반복 비용을 판단할 때
+
+작은 수정, 직접 답변과 일반적인 테스트 실행은 기존 작업 방식으로 처리합니다.
 
 ## 더 보기
 
-- 스킬 상세 규칙: [English](skills/codex-token-discipline/SKILL.md) | [한국어](skills/codex-token-discipline/SKILL.ko.md)
-- 방향 문서: [docs/skill-direction.md](docs/skill-direction.md)
-- 관측 패턴: [docs/reference/observed-token-patterns.md](docs/reference/observed-token-patterns.md)
+- 스킬 상세 규칙: [English](skills/agent-cost-efficiency/SKILL.md) | [한국어](skills/agent-cost-efficiency/SKILL.ko.md)
+- 개편과 유지 기준: [스킬 방향](docs/skill-direction.md)
+- 비용 위험 판단: [작업 비용 신호](docs/reference/observed-token-patterns.md)
 
 ## 지원
 

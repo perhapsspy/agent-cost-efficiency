@@ -1,28 +1,19 @@
-# Token-Usage Diagnostic Signals
+# 작업 비용 신호
 
-## Scope
+이 문서는 다음 실행이나 읽기의 범위를 정할 때 사용할 신호를 정리합니다. 현재 작업의 규모, 결과와 남은 검증을 함께 보고 판단합니다.
 
-These are diagnostic heuristics, not claims about every session or project. Confirm them against the session logs and working scope being audited.
+## 확인할 신호
 
-The `<projects-root>` audit ending 2026-07-24 is the current baseline: about 1.008 billion uncached input tokens, 794 million tool-output characters, and 412 large-output events over 30 days; about 519 million, 142 million, and 166 respectively over 7 days. The 7-day tool-output average was about 8,000 characters per result, with exec-family output as the main signal.
+- 전체 로그·파일·diff를 반복해서 읽으면 새로 필요한 근거보다 중복 입력이 커질 수 있습니다.
+- 호출별 출력이 작아도 같은 실행이나 관측을 자주 반복하면 총비용이 커집니다.
+- 브라우저 본문, DOM 전체, 이미지와 인코딩된 스크린샷은 한 번의 확인에도 큰 입력을 만들 수 있습니다.
+- 오래 걸리는 실행은 출력량과 별개로 재시도 근거와 중단·관측 시점이 필요합니다.
+- 넓거나 중복된 위임은 메인과 담당자의 총비용을 함께 늘립니다.
+- 재개 가능한 상태가 없으면 다음 세션에서 조사와 읽기가 반복됩니다.
+- 상시 읽는 지침과 항상 제공되는 도구·스킬은 해당 세션마다 반복 비용을 만듭니다.
 
-## Signals to Check
+## 판단에 적용
 
-- Repeated large command outputs, broad file reads, and full diffs can dominate uncached input.
-- Moderate per-call output can still become the dominant cost when repeated often, so prevention should not depend on one large-event threshold.
-- Browser body text, DOM dumps, images, and encoded screenshots can make a single interaction unusually large.
-- Long sessions may accumulate substantial cached input even when each new read is small.
-- Broad or duplicate delegation can multiply total usage across agents.
-- Reopening work without a compact handoff can repeat discovery and reading costs.
-- Large always-read instruction files add recurring overhead to every applicable task.
+다음 결정에 필요한 반환 형태와 출력 예산을 먼저 정합니다. source에서 결과를 줄이고, 전체 출력이 다시 필요할 때만 artifact에 보존합니다. 아직 유효한 결과는 재사용하며, 실패나 조건 변화가 가리키는 범위만 다시 확인합니다.
 
-## How to Use Them
-
-- Start with a summary command and widen only when the next decision needs more evidence.
-- Define the return shape and output budget before unpredictable or batch tool calls; preserve full output as an artifact only when later inspection is useful.
-- Compare phases and tool categories before attributing usage to one event.
-- Treat phase changes as a natural point to leave compact resume state, then let the coordinating director decide whether to continue, hand off, or rotate.
-- Ask delegated agents for bounded findings rather than raw notes.
-- Route detailed procedures from always-read files to skills or repository documentation.
-- Use the bundled summarizer or an explicitly scoped session-log scan; avoid broad home-directory searches.
-- Treat token usage as a diagnostic input, not a standalone quality metric.
+단계가 바뀌면 결론과 다음 행동을 짧게 남깁니다. 위임 결과는 담당 범위의 근거와 남은 문제로 받고, 상세 절차는 상시 지침에서 해당 스킬이나 저장소 문서로 연결합니다. 완료 판단은 요청한 결과와 필요한 검증에 둡니다.
