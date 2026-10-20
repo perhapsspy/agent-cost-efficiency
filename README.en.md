@@ -7,7 +7,7 @@ A skill that reduces avoidable token, time, and tool-execution cost in agent wor
 ## Quick Start
 
 ```bash
-npx skills add perhapsspy/codex-token-discipline
+npx skills add perhapsspy/agent-cost-efficiency
 ```
 
 Or copy `skills/agent-cost-efficiency` into your agent's skill directory.

@@ -7,7 +7,7 @@
 ## 빠른 시작
 
 ```bash
-npx skills add perhapsspy/codex-token-discipline
+npx skills add perhapsspy/agent-cost-efficiency
 ```
 
 또는 `skills/agent-cost-efficiency` 폴더를 사용하는 에이전트의 스킬 디렉터리에 복사합니다.
